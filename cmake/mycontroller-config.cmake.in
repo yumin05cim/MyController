@@ -1,0 +1,54 @@
+# MyController CMake config file
+#
+# This file sets the following variables:
+# MyController_FOUND - Always TRUE.
+# MyController_INCLUDE_DIRS - Directories containing the MyController include files.
+# MyController_IDL_DIRS - Directories containing the MyController IDL files.
+# MyController_LIBRARIES - Libraries needed to use MyController.
+# MyController_DEFINITIONS - Compiler flags for MyController.
+# MyController_VERSION - The version of MyController found.
+# MyController_VERSION_MAJOR - The major version of MyController found.
+# MyController_VERSION_MINOR - The minor version of MyController found.
+# MyController_VERSION_REVISION - The revision version of MyController found.
+# MyController_VERSION_CANDIDATE - The candidate version of MyController found.
+
+message(STATUS "Found MyController-@PROJECT_VERSION@")
+set(MyController_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(MyController_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(MyController_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(MyController_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(MyController_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(MyController_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(MyController_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(MyController_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(MyController_VERSION @PROJECT_VERSION@)
+set(MyController_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(MyController_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(MyController_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(MyController_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
